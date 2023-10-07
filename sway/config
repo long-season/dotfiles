@@ -1,0 +1,240 @@
+### ------- General 
+### ------- Configuration
+### ---------------------
+
+### Variables
+
+    # Mod1 -> Alt, Mod4 -> Meta
+    set $mod Mod4
+    
+    # Margin for gaps 
+    set $outer 5
+    set $inner 5
+    
+    # Navigation
+    set $left h
+    set $down j
+    set $up k
+    set $right l
+    set $term foot
+    set $browser firefox
+    set $file_manager thunar
+    set $wallpaper '$HOME/.config/wall'
+    set $lock 'swaylock --indicator --clock -S --effect-blur 9x2'
+    set $emacs emacsclient -cn
+    
+    # Pass menu to swaymsg
+    # bemenu can use --binding 'vim' for vim keybinds, but this doesn't seem to work on wayland
+    #set $menu dmenu_path | BEMENU_BACKEND=wayland bemenu --list 5 --scrollbar 'off' | xargs swaymsg exec --
+    # Use this for centered list output
+    set $menu dmenu_path | BEMENU_BACKEND=wayland bemenu --list 10 --scrollbar 'off' \
+          --center --width-factor 0.3 --nb '#000000bb' --ab '#000000cc' | xargs swaymsg exec --
+
+### Appearance
+
+    # Gaps
+    gaps outer $outer
+    gaps inner $inner
+    smart_gaps on
+    
+    # Fonts, accessibility
+    #exec xrdb ~/.Xresources
+    font Open:Sans 10
+    
+    # Borders
+    default_border pixel 1
+    default_floating_border normal
+    hide_edge_borders smart
+
+
+### Keybinds, Programs and Scripts
+
+    # Autostart 
+    exec --no-startup-id mako
+    exec --no-startup-id nm-applet --indicator
+
+    # General
+    bindsym $mod+Shift+q kill
+    bindsym $mod+Shift+r reload
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit?' -B \
+                                'Yes, exit sway' 'swaymsg exit'
+
+    # Terminal
+    bindsym $mod+Return exec $term
+
+    # Launcher
+    bindsym $mod+d exec $menu
+
+    # Browser
+    bindsym $mod+Shift+w exec $browser
+
+    # File Manager
+    bindsym $mod+Shift+n exec $file_manager
+
+    # Emacs
+    bindsym $mod+Shift+d exec $emacs
+
+
+### Multimedia Keys
+
+    bindsym --locked XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
+    bindsym --locked XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
+    bindsym --locked XF86AudioMute exec --no-startup-id pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
+    bindsym --locked XF86AudioPlay exec playerctl play-pause
+    bindsym --locked XF86AudioNext exec playerctl next
+    bindsym --locked XF86AudioPrev exec playerctl previous
+    bindsym XF86ScreenSaver exec $lock
+
+    # Set backlight brightness
+    bindsym XF86MonBrightnessDown exec light -U 15
+    bindsym XF86MonBrightnessUp exec light -A 15
+
+
+### Output configuration
+
+    output * bg $wallpaper fill
+
+
+### Idle
+
+    exec swayidle \
+          timeout 300 $lock \
+          timeout 400 'swaymsg "output * dpms off"' \
+          after-resume 'swaymsg "output * dpms on"' \
+          before-sleep $lock
+
+### Status Bar:
+    
+    bar {
+        swaybar_command waybar
+    }
+
+
+### ------- Window-specific
+### ------- Configuration
+### ---------------------
+
+### Floating tweaks:
+
+    # Make specific windows floating by default.
+    for_window [app_id="Thunar" title="^File Operation Progress.*"] floating enable
+    for_window [title="Picture in picture"] {
+    floating enable
+    sticky enable
+    }
+
+
+### Navigation:
+
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+
+    # Move the focused window around
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+
+### Workspaces:
+
+    set $ws1   'Terminal'
+    set $ws2   'Files'
+    set $ws3   'Browser'
+    set $ws4   'Dev'
+    set $ws5   5
+    set $ws6   6
+    set $ws7   7
+    set $ws8   8
+    set $ws9   'Log'
+    set $wsF1  'Mail'
+    set $wsF2  'Video'
+
+    # Switch to workspace
+    bindsym $mod+1 workspace $ws1
+    bindsym $mod+2 workspace $ws2
+    bindsym $mod+3 workspace $ws3
+    bindsym $mod+4 workspace $ws4
+    bindsym $mod+5 workspace $ws5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
+    bindsym $mod+F1 workspace $wsF1
+    bindsym $mod+F2 workspace $wsF2
+
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+    bindsym $mod+Shift+F1 move container to workspace $wsF1
+    bindsym $mod+Shift+F2 move container to workspace $wsF1
+    
+    # Default workspaces
+    assign [class="^Telegram$"] $wsF1
+    assign [class="^Thunderbird$"] $wsF1
+
+### Layout stuff:
+
+    # These are more or less the ootb defaults.
+
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+
+    # Switch the current container between different layout styles
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+a focus parent
+
+
+### Scratchpad:
+
+    # Move the currently focused window to the scratchpad
+    bindsym $mod+Shift+minus move scratchpad
+
+    # Cycle through scratchpad windows
+    bindsym $mod+minus scratchpad show
+
+
+### Resizing containers:
+
+    mode "resize" {
+        bindsym $left resize shrink width 50px
+        bindsym $down resize grow height 10px
+        bindsym $up resize shrink height 10px
+        bindsym $right resize grow width 50px
+    
+        # Return to default mode
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+    }
+        bindsym $mod+r mode "resize"
+
+include /etc/sway/config.d/*

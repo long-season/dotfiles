@@ -1,0 +1,99 @@
+### NCMCPP CONFIGURATION
+#
+# MPD related configuration
+# mpd_music_dir needs to be set the same as MPD
+ncmpcpp_directory = "~/.config/ncmpcpp"
+mpd_host = "127.0.0.1"
+mpd_port = "6000"
+mpd_music_dir = "/Music"
+
+### List appearance and song format
+# To limit text length to X characters, do %Xy where 'X' the length and 'y' the song format string.
+# Cheatsheet: 
+# %l/length, %f/filename, %D/dir, %a/artist, %A/artist(album), 
+# %t/title, %b/album, %y/date, %n/track, %N/track+album tracks,
+# %g/genre, %c/composer, %p/performer, %d/disc, %R/align right.
+
+song_list_format = " $8%20b $2• $8%t $R$7%A $2• $8%y $2• $3%l"
+song_columns_list_format = "(3)[]{}(92)[white]{t} (4)[red]{l}"
+song_status_format = "$b $8%A $8•$3• $3%t $3•$5• $5%b $5•$2• $2%y"
+playlist_display_mode = "classic"
+
+# Formats currently playing track.
+now_playing_prefix = "$b$2>"
+now_playing_suffix = "$8$/b"
+
+### Playlists
+message_delay_time= "1"
+
+### Progress Bar
+# Xterm-256 colours can be used.
+progressbar_look = "─╼"
+progressbar_color = 246
+progressbar_elapsed_color = 125
+
+### Colors
+# Xterm-256 colours can be used.
+# Defaults cheatsheet:
+# 0/default, 1/black, 2/red, 3/green, 4/yellow,
+# 5/blue, 6/magenta, 7/cyan, 8/white, 9/reset
+colors_enabled = "yes"
+# Controls 'N/A' tag colour (in search, for example)
+empty_tag_color = 164
+# Controls non-playlist windows.
+main_window_color = 190
+# Controls window name colour if on.
+header_window_color = "black"
+alternative_ui_separator_color = 125
+#main_window_color = "blue" 
+#statusbar_color = "blue"
+# Top right of alternative screen (rwx)
+state_line_color = white
+#state_flags_color = "blue"
+
+
+### Other
+display_bitrate = yes
+autocenter_mode = yes
+centered_cursor = yes
+titles_visibility = no
+statusbar_visibility = no
+
+
+# Starts ncmcpp with the given screens (slave -> dual screen)
+# Width part sets the amount of screen each get.
+startup_screen = "playlist"
+startup_slave_screen = "visualizer"
+locked_screen_width_part = 50
+ask_for_locked_screen_width_part = no
+
+# Allows for scrolling to start from back up.
+cyclic_scrolling = yes
+# Default seeking is very slow.
+incremental_seeking = yes
+
+empty_tag_marker=" N/A " 
+mouse_support = "yes"
+
+# Displays name of screen (Playlist, browser)
+header_visibility = "no"
+
+display_remaining_time = "no"
+ask_before_clearing_playlists = "yes"
+discard_colors_if_item_is_selected = "yes"
+user_interface = "alternative"
+
+### Visualizer stuff
+visualizer_data_source                = /tmp/mpd.fifo
+visualizer_output_name                = fifo output
+visualizer_in_stereo                  = no
+visualizer_type                       = spectrum
+visualizer_look                       = "█┇"
+visualizer_spectrum_smooth_look       = no
+visualizer_spectrum_hz_min            = 20
+visualizer_spectrum_hz_max            = 10000
+#visualizer_fps                       = 60
+#visualizer_autoscale                 = yes
+
+# Values 1-5, with 5 making the visualizer less 'jumpy' 
+#visualizer_spectrum_dft_size         = 3

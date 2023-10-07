@@ -1,0 +1,99 @@
+{
+    "layer": "bottom",
+    "position": "top",
+    "height": 20,
+    "spacing": 2,
+
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["sway/window"],
+    "group/battery":{
+            "modules": [ ""]},
+    "modules-right": ["tray", "idle_inhibitor", "pulseaudio", "battery", "clock"],
+    "sway/mode": {
+        "format": "Mode: {}"
+    },
+    "sway/workspaces": {
+        "format": "{name}",
+        "disable-scroll": true
+    },
+    "sway/window": {
+        "max-length": 80,
+        "tooltip": false
+    },
+    "clock": {
+        "format": "{:%a. %d %b %H:%M}",
+        "format-alt": "{: %H:%M}",
+        "format-alt-click": "click-right",
+        "tooltip": true
+    },
+    "battery": {
+        "format": "| {capacity}%{icon} |",
+        "format-alt": "| {capacity}% {time} {icon} |",
+        "format-alt-click": "click-right",
+        "format-icons": ["", "", "", "", ""],
+        "format-charging": "| {capacity}% |",
+        "interval": 120,
+        "states": {
+            "warning": 25,
+            "critical": 10
+        },
+        "tooltip": true
+    },
+    "battery#bat2": {
+        "format": "{capacity}%",
+        "format-charging": "{capacity}%",
+        "interval": 30,
+    },
+    "network": {
+        "format": "{icon}",
+        "format-alt": "{ipaddr}/{cidr} {icon}",
+        "format-alt-click": "click-right",
+        "format-icons": {
+            "wifi": [""],
+            "ethernet": [" ETH "],
+            "disconnected": [" NET DOWN "]
+        }, 
+    "tooltip": false
+    },
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-alt": "{volume} {icon}",
+        "format-alt-click": "click-right",
+        "format-muted": "x",
+        "format-icons": {
+            "phone": [" ", " ", " "],
+            "default": ["", "", ""]
+        },
+        "scroll-step": 10,
+        "on-click": "pavucontrol",
+        "tooltip": true
+    },
+    "backlight": {
+        "format": "{icon}",
+        "format-alt": "{percent}%\n{icon}",
+        "format-alt-click": "click-right",
+        "format-icons": ["",""],
+        "on-scroll-down": "light -A 5",
+        "on-scroll-up": "light -U 5"
+    },
+    "idle_inhibitor": {
+        "format": "| {icon}",
+        "format-icons": {
+            "activated": "!",
+            "deactivated": ""
+        },
+        "tooltip": false
+    },
+    "mpris": {
+        "max-length": 15,
+        "interval": 5,
+        "format": "\t{artist} - {title} ",
+        //"player-icons": { "default": "▶" },
+        //"status-icons": { "paused": "⏸" },
+        "ignored-players": ["firefox"]
+    },
+    "tray": {
+        "icon-size": 20
+    }
+}
+

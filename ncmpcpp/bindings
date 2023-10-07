@@ -1,0 +1,22 @@
+### CUSTOM NCMCPP KEYBINDS
+# 
+
+## Vim-style keybinds
+def_key "l"
+  next_column
+def_key "h"
+  previous_column
+def_key "k"
+  scroll_up
+def_key "j"
+  scroll_down
+def_key "h"
+  master_screen
+def_key "l"
+  slave_screen
+
+# Changed from 'l' due
+# to above changes.
+def_key "O"
+  show_lyrics
+
