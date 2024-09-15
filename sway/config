@@ -4,6 +4,16 @@
 
 ### Variables
 
+    # External monitor boilerplate
+    # Monitor names go here. These will differ so 
+    # always check with xrandr or similar.
+    set $mainmon "LVDS-1"
+    set $exmon 'HDMI-A-1'
+    # TODO: Use a script to check this
+    #output $exmon {
+    #        resolution 1920x1080 position 1080,420
+    #}
+
     # Mod1 -> Alt, Mod4 -> Meta
     set $mod Mod4
     
@@ -29,6 +39,8 @@
     # Use this for centered list output
     set $menu dmenu_path | BEMENU_BACKEND=wayland bemenu --list 10 --scrollbar 'off' \
           --center --width-factor 0.3 --nb '#000000bb' --ab '#000000cc' | xargs swaymsg exec --
+    set $desk_menu dmenu_path | j4-dmenu-desktop --dmenu="bemenu --list 10 --ignorecase --scrollbar 'off' \
+          --center --width-factor 0.3 --nb '#000000bb' --ab '#000000cc'" | xargs swaymsg exec --
 
 ### Appearance
 
@@ -40,9 +52,12 @@
     # Fonts, accessibility
     #exec xrdb ~/.Xresources
     font Open:Sans 10
-    
+    # This doesn't seem to be respected by anything so need to modify gsettings as well.
+    seat * xcursor_theme 'Capitaine Cursors' 32
+
     # Borders
     default_border pixel 1
+    client.focused #4c7899 #696969 #ffffff #99ffcc
     default_floating_border normal
     hide_edge_borders smart
 
@@ -50,12 +65,14 @@
 ### Keybinds, Programs and Scripts
 
     # Autostart 
-    exec --no-startup-id mako
+    exec --no-startup-id mako -c '$HOME/.config/mako/config
     exec --no-startup-id nm-applet --indicator
+
 
     # General
     bindsym $mod+Shift+q kill
     bindsym $mod+Shift+r reload
+    bindsym $mod+Shift+o exec makoctl dismiss
     bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit?' -B \
                                 'Yes, exit sway' 'swaymsg exit'
 
@@ -64,6 +81,7 @@
 
     # Launcher
     bindsym $mod+d exec $menu
+    bindsym $mod+f exec $desk_menu
 
     # Browser
     bindsym $mod+Shift+w exec $browser
@@ -73,6 +91,9 @@
 
     # Emacs
     bindsym $mod+Shift+d exec $emacs
+    
+    # Scrennshots
+    bindsym Print exec grimshot save area 
 
 
 ### Multimedia Keys
@@ -84,8 +105,11 @@
     bindsym --locked XF86AudioNext exec playerctl next
     bindsym --locked XF86AudioPrev exec playerctl previous
     bindsym XF86ScreenSaver exec $lock
+    bindsym XF86Display exec swaymsg output $exmon toggle
+
 
     # Set backlight brightness
+    # Light only works with backlight rules in /etc/udev/rules.d/
     bindsym XF86MonBrightnessDown exec light -U 15
     bindsym XF86MonBrightnessUp exec light -A 15
 
@@ -156,6 +180,12 @@
     set $ws9   'Log'
     set $wsF1  'Mail'
     set $wsF2  'Video'
+
+    # Workspace for each monitor
+    workspace $ws1 output $exmon $mainmon
+    workspace $ws4 output $exmon $mainmon
+    workspace $ws5 output $exmon $mainmon
+    workspace $ws6 output $exmon $mainmon
 
     # Switch to workspace
     bindsym $mod+1 workspace $ws1

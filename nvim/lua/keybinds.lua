@@ -9,6 +9,7 @@ map('', '<F8>', ':nohl<CR>')
 map('i', '<F8>', '<Esc>:nohl<CR>a')
 map('n', 'S', ':%s//g<Left><Left>')
 
+-- For testing simple C programs directly.
 map('', '<F7>', ':w <CR> :!clear && gcc % <CR>')
 map('', '<F9>', ':w <CR> :!clear && gcc % -o %< && ./%<<CR>')
 map('n', '<F5>', ':make<CR> :!./%<<CR>')
@@ -29,6 +30,7 @@ map('n', '<Leader>3', '3gt<CR>')
 map('n', '<Leader>4', '4gt<CR>')
 map('n', '<Leader>t', ':tabnew<CR>')
 map('n', '<Leader>c', ':tabclose<CR>')
+map('n', '<Leader><Tab>', ':tabnext #<CR>')
 
 -- Function & Plugin-related
 map('n', '<F6>', ':UndotreeToggle<CR> :UndotreeFocus<CR>')
