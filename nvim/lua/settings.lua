@@ -7,6 +7,7 @@ syntax enable
 filetype off
 ]])
 
+
 cmd.filetype = 'plugin indent on'
 
 letg.mapleader = ' '
@@ -14,7 +15,7 @@ letg.maplocalleader = ' '
 letg.completor_python_binary = '/bin/python'
 
 -- General
-set.nocompatible = true
+-- set.nocompatible = true
 set.encoding = 'utf-8'
 set.mouse = 'a'
 set.clipboard = 'unnamedplus' -- "Fixes" Vim/3rd party clipboard
@@ -48,8 +49,8 @@ set.splitbelow = true
 -- set.signcolumn = 'yes:4'
 
 -- Plugins
-set.undodir = ".config/nvim/undodir/" -- Persistent Undo
-set.undofile = true
+-- set.undodir = ".config/nvim/undodir/" -- Persistent Undo
+-- set.undofile = true
 letg.better_escape_shortcut = 'jk'
 letg.better_escape_interval = 250 
 

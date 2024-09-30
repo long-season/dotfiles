@@ -29,7 +29,7 @@ map('n', '<Leader>2', '2gt<CR>')
 map('n', '<Leader>3', '3gt<CR>')
 map('n', '<Leader>4', '4gt<CR>')
 map('n', '<Leader>t', ':tabnew<CR>')
-map('n', '<Leader>c', ':tabclose<CR>')
+map('n', '<Leader>wq', ':tabclose<CR>')
 map('n', '<Leader><Tab>', ':tabnext #<CR>')
 
 -- Function & Plugin-related
